@@ -20,72 +20,71 @@ const winPattern = [
 ];
 
 const disable = () => {
-    for(box of boxes) {
-        box.disabled = true;
-    }
-}
+  for (box of boxes) {
+    box.disabled = true;
+  }
+};
+
 const enable = () => {
-    for(box of boxes) {
-        box.disabled = false;
-        box.innerText = "";
-    }
-}
+  for (box of boxes) {
+    box.disabled = false;
+    box.innerText = "";
+  }
+};
 
 const showWinner = (pos1Val) => {
-    msgContainer.classList.remove("hidden");
-    msg.innerText = `The Winner is ${pos1Val}`
-}
+  msgContainer.classList.remove("hidden");
+  msg.innerText = `The Winner is ${pos1Val}`;
+};
+
 const reset = () => {
-    enable();
-    console.log("clicked");
-    turn0 = true;
-    count = 0;
-    msg.innerText = "";
-    msgContainer.classList.add("hidden");
-}
+  enable();
+  console.log("clicked");
+  turn0 = true;
+  count = 0;
+  msg.innerText = "";
+  msgContainer.classList.add("hidden");
+};
 
 const checkWinner = () => {
-    for(let pattern of winPattern){
-        let pos1Val = boxes[pattern[0]].innerText;
-        let pos2Val = boxes[pattern[1]].innerText;
-        let pos3Val = boxes[pattern[2]].innerText;
+  for (let pattern of winPattern) {
+    let pos1Val = boxes[pattern[0]].innerText;
+    let pos2Val = boxes[pattern[1]].innerText;
+    let pos3Val = boxes[pattern[2]].innerText;
 
-        if(pos1Val != "" && pos2Val != "" && pos3Val != "") {
-            if(pos1Val === pos2Val && pos2Val === pos3Val){
-                console.log("Winner");
-                disable();
-                showWinner(pos1Val);
-            }
-        }
-        
+    if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
+      if (pos1Val === pos2Val && pos2Val === pos3Val) {
+        console.log("Winner");
+        disable();
+        showWinner(pos1Val);
+      }
     }
-}
+  }
+};
 
 const drawGame = () => {
-    if(count === 9 && msg.innerText === "") {
-        msg.innerText = "The Game is Draw";
-        msgContainer.classList.remove("hidden");
-    }
-}
+  if (count === 9 && msg.innerText === "") {
+    msg.innerText = "The Game is Draw";
+    msgContainer.classList.remove("hidden");
+  }
+};
 
-boxes.forEach ((box) => {
-    box.addEventListener("click",() => {
-        count++;
-        console.log(count);
-        if(turn0){
-            box.innerText = "O";
-            turn0 = false;
-            box.style.color = "#104F55";
-        }
-        else {
-            box.innerText = "X";
-            turn0 = true;
-        }
-        box.disabled = true;
-        checkWinner();
-        drawGame();
-    });
+boxes.forEach((box) => {
+  box.addEventListener("click", () => {
+    count++;
+    if (turn0) {
+      box.innerText = "O";
+      turn0 = false;
+      box.style.color = "#104F55";
+    } else {
+      box.innerText = "X";
+      turn0 = true;
+    }
+    box.disabled = true;
+    checkWinner();
+    drawGame();
+  });
 });
 
-resetGame.addEventListener("click",reset);
-newGame.addEventListener("click",reset);
+resetGame.addEventListener("click", reset);
+newGame.addEventListener("click", reset);
